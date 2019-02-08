@@ -1,0 +1,19 @@
+{
+  "name": "hungry-pure-js-game-jam",
+  "version": "1.0.0",
+  "description": "My submission for the Pure JS Game Jam",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "",
+  "keywords": [
+    "Electron"
+  ],
+  "author": "stefnotch",
+  "license": "Unlicense",
+  "devDependencies": {
+    "electron": "^4.0.3"
+  },
+  "dependencies": {}
+}
