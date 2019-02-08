@@ -12,7 +12,7 @@
 
 .os-window {
   position: absolute;
-  background-color: transparent;
+  background-color: red;
   width: 100px;
   height: 100px;
   top: 0px;
@@ -20,4 +20,31 @@
   margin: 0px;
   padding: 0px;
   border: 1px solid lightgrey;
+  display: flex;
+  flex-direction: column;
+}
+
+.os-window .window-content {
+  flex-grow: 1;
+}
+
+.window-header {
+  background-color: lightblue;
+  max-height: 5em;
+  height: 5em;
+}
+
+.window-titlebar {
+  background-color: blue;
+  height: 1.5em;
+}
+
+.window-content {
+  background-color: grey;
+}
+
+.window-bottom-bar {
+  background-color: green;
+  height: 1.5em;
+  max-height: 1.5em;
 }
