@@ -6,13 +6,18 @@ const { mode } = require("./config");
 
 if (mode == "debug") require("electron-reload")(__dirname);
 
+process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: { nodeIntegration: true }
+  });
 
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
