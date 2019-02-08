@@ -1,3 +1,4 @@
 module.exports = {
-  mode: "debug"
+  isDebug: true,
+  showDevtools: false
 };

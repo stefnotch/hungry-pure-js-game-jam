@@ -2,9 +2,9 @@
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require("electron");
-const { mode } = require("./config");
+const configSettings = require("./config");
 
-if (mode == "debug") require("electron-reload")(__dirname);
+if (configSettings.isDebug) require("electron-reload")(__dirname);
 
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 // Keep a global reference of the window object, if you don't, the window will
@@ -22,7 +22,7 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
 
-  if (mode == "debug") mainWindow.webContents.openDevTools();
+  if (configSettings.showDevtools) mainWindow.webContents.openDevTools();
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
