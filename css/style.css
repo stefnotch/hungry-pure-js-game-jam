@@ -9,3 +9,15 @@
   margin: 0;
   padding: 0;
 }
+
+.os-window {
+  position: absolute;
+  background-color: transparent;
+  width: 100px;
+  height: 100px;
+  top: 0px;
+  left: 0px;
+  margin: 0px;
+  padding: 0px;
+  border: 1px solid lightgrey;
+}

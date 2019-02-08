@@ -332,9 +332,19 @@ Render.world = function(render) {
 
   Events.trigger(render, "beforeRender", event);
 
+  //TODO: renderCalls
+  /*
+  var renderCalls = render.renderCalls;
+  renderCalls.forEach(renderCall => {
+    context.save();
+    context.clip();
+    renderCall.render();
+
+    context.restore();
+  });*/
   // apply background if it has changed
-  if (render.currentBackground !== background)
-    _applyBackground(render, background);
+  //if (render.currentBackground !== background)
+  //  _applyBackground(render, background);
 
   // clear the canvas with a transparent fill, to allow the canvas background to show
   context.globalCompositeOperation = "source-in";
