@@ -1,5 +1,5 @@
 const Matter = require("matter-js");
-const { Engine, World, Bodies } = Matter;
+const { Engine, World, Bodies, Events } = Matter;
 const CRender = require("./js/CustomRender");
 const { engine, render, canvas, ctx } = require("./js/MatterSetup");
 const OSWindow = require("./js/OSWindow");
@@ -16,6 +16,23 @@ World.add(engine.world, [boxB, ground]);
 
 // run the engine
 Engine.run(engine);
+
+Events.on(engine, "beforeUpdate", ev => {
+  ev.source.world.bodies.forEach(b => {
+    if (b.label == "bbBody") {
+      b.isStatic = true;
+    }
+    b.torque = 0;
+  });
+});
+
+Events.on(engine, "afterUpdate", ev => {
+  ev.source.world.bodies.forEach(b => {
+    if (b.label == "bbBody") {
+      b.isStatic = false;
+    }
+  });
+});
 
 // run the renderer
 CRender.run(render);

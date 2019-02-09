@@ -28,6 +28,8 @@ class Actor {
   update() {
     this.tickCount++;
   }
+
+  draw(ctx) {}
 }
 
 module.exports = Actor;

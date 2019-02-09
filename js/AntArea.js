@@ -110,10 +110,10 @@ class AntArea {
         this.bbParts.left,
         this.bbParts.right,
         this.bbParts.bottom
-      )
+      ),
+      label: "bbBody"
     });
     this.bbActor = new Actor(this, bbBody, true);
-
     //this.bbActor.positionDelta = Vector.create(0, 0);
     //this.bbActor.body.pa
 
@@ -143,42 +143,6 @@ class AntArea {
 
       this.createBoundingBox();
     }
-  }
-
-  updateBBParts() {
-    let thiccness = 5;
-
-    this.bbParts.top[0] = Bodies.rectangle(
-      this.position.x + this.size.x / 2,
-      this.position.y + TOP_BAR_HEIGHT / 2,
-      this.size.x - thiccness * 4,
-      TOP_BAR_HEIGHT
-    );
-
-    let leftCount = 3 + Math.floor(Math.random() * 3); // 3 to 5 segments
-    let leftSegmentSize = (1 / leftCount) * this.size.y;
-    for (let i = 0; i < leftCount; i++) {
-      let left = Bodies.rectangle(
-        this.position.x +
-          this.size.x -
-          thiccness / 2 +
-          this.bbActor.positionDelta.x,
-        i * leftSegmentSize + leftSegmentSize / 2,
-        thiccness,
-        leftSegmentSize
-      );
-
-      this.bbParts.left.push(left);
-    }
-
-    Body.setParts(
-      this.bbActor.body,
-      this.bbParts.top.concat(
-        this.bbParts.left,
-        this.bbParts.right,
-        this.bbParts.bottom
-      )
-    );
   }
 
   /**
@@ -213,6 +177,13 @@ class AntArea {
     let body = actor.body;
     World.remove(engine.world, [body], true);
     actor.antArea = null;
+  }
+
+  randomPosition() {
+    return Vector.create(
+      this.position.x + (Math.random() + 0.2) * this.size.x * 0.7,
+      this.position.y + (Math.random() + 0.2) * this.size.y * 0.7
+    );
   }
 }
 
