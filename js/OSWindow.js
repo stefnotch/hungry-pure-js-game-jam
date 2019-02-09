@@ -1,4 +1,5 @@
 const interact = require("interactjs");
+const CachedFS = require("./CachedFS");
 const OSWindowsContainer = document.getElementById("os-windows-container");
 
 class OSWindow {
@@ -69,6 +70,9 @@ class OSWindow {
       .on("down", function(event) {
         self.moveToFront();
       });
+
+    this.cachedFS = new CachedFS(".");
+    this.renderFS();
   }
 
   moveToFront() {
@@ -97,6 +101,8 @@ class OSWindow {
       }
     });
   }
+
+  renderFS() {}
 }
 
 module.exports = OSWindow;

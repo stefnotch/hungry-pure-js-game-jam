@@ -3,6 +3,7 @@ const { Engine, World, Bodies } = Matter;
 const CRender = require("./js/CustomRender");
 const { engine, render, canvas, ctx } = require("./js/MatterSetup");
 const OSWindow = require("./js/OSWindow");
+const CachedFS = require("./js/CachedFS");
 
 var boxA = Bodies.rectangle(400, 200, 80, 80);
 var boxB = Bodies.rectangle(450, 50, 80, 80);
@@ -28,3 +29,9 @@ var y = new OSWindow(document.querySelector(".os-window-template"), {
   size: Matter.Vector.create(300, 300),
   folderName: "hellstdstdhnenhdtssssssssssssshn"
 });
+
+var cfs = new CachedFS(".");
+console.log(cfs.getFolders());
+console.log(cfs.getFiles());
+//cfs.goToFolder("name");
+//cfs.goUp();
