@@ -7,6 +7,11 @@ type OSWindowOptions = {
     x: number;
     y: number;
   };
-  folderName: string;
+  filePath: string;
   //zIndex: number;
+};
+
+type OSWindowData = {
+  folderName: string;
+  itemCount: string;
 };

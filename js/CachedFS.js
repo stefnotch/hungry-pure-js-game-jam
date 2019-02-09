@@ -34,6 +34,10 @@ class CachedFSInstance {
     return this._folderPath;
   }
 
+  get folderName() {
+    return path.basename(this._folderPath);
+  }
+
   set folderPath(newPath) {
     newPath = path.resolve(newPath);
     this._folderPath = newPath;

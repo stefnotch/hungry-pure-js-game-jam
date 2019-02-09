@@ -21,17 +21,18 @@ CRender.run(render);
 var x = new OSWindow(document.querySelector(".os-window-template"), {
   position: Matter.Vector.create(0, 0),
   size: Matter.Vector.create(300, 300),
-  folderName: "hellstdstdhnenhdtssssssssssssshn"
+  filePath: "."
 });
 
 var y = new OSWindow(document.querySelector(".os-window-template"), {
   position: Matter.Vector.create(0, 0),
   size: Matter.Vector.create(300, 300),
-  folderName: "hellstdstdhnenhdtssssssssssssshn"
+  filePath: "."
 });
 
 var cfs = new CachedFS(".");
 console.log(cfs.getFolders());
 console.log(cfs.getFiles());
+console.log(cfs.folderName);
 //cfs.goToFolder("name");
 //cfs.goUp();

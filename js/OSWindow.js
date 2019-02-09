@@ -22,6 +22,9 @@ class OSWindow {
     }
     this.options = options;
 
+    /** @type {OSWindowData} */
+    this.data = {};
+
     // Append elements and stuff
     OSWindowsContainer.appendChild(this.element);
 
@@ -32,6 +35,13 @@ class OSWindow {
 
     this.updateInsertText();
 
+    this.setupInteraction();
+
+    this.cachedFS = new CachedFS(".");
+    this.renderFS();
+  }
+
+  setupInteraction() {
     let self = this;
     interact(this.element)
       .draggable({
@@ -70,9 +80,6 @@ class OSWindow {
       .on("down", function(event) {
         self.moveToFront();
       });
-
-    this.cachedFS = new CachedFS(".");
-    this.renderFS();
   }
 
   moveToFront() {
@@ -96,13 +103,20 @@ class OSWindow {
       let nameAttribute = element.getAttribute("name");
       if (this.options[nameAttribute]) {
         element.innerText = this.options[nameAttribute];
+      } else if (this.data[nameAttribute]) {
+        element.innerText = this.data[nameAttribute];
       } else {
         element.innerText = "";
       }
     });
   }
 
-  renderFS() {}
+  renderFS() {
+    this.data.folderName = this.cachedFS.folderName;
+    this.data.itemCount =
+      this.cachedFS.getFiles().length + this.cachedFS.getFolders().length;
+    this.updateInsertText();
+  }
 }
 
 module.exports = OSWindow;
