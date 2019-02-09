@@ -1,7 +1,7 @@
 const interact = require("interactjs");
 const CachedFS = require("./CachedFS");
 const RenderCall = require("./RenderCall");
-const OSWindowsContainer = document.getElementById("os-windows-container");
+const GGlobals = require("./GGlobals");
 
 class OSWindow {
   /**
@@ -27,9 +27,7 @@ class OSWindow {
     this.data = {};
 
     // Append elements and stuff
-    OSWindowsContainer.appendChild(this.element);
-
-    this.element = OSWindowsContainer.lastElementChild;
+    this.element = GGlobals.osWindowsContainer.add(this);
 
     this.render = this.options.render;
     this.renderDiv = this.element.querySelector(".window-content");
@@ -90,7 +88,7 @@ class OSWindow {
 
   moveToFront() {
     if (this.element.nextElementSibling) {
-      OSWindowsContainer.appendChild(this.element);
+      GGlobals.osWindowsContainer.moveToFront(this);
     }
   }
 
