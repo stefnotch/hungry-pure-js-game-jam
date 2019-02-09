@@ -2,7 +2,7 @@ const { Vector, Body, Bodies } = require("matter-js");
 const Actor = require("./../Actor");
 const Ant = require("./Ant");
 
-let MAX_TICKS = 100;
+let MAX_TICKS = 50; //TODO: Change to 300
 let ANT_FOOD = 100;
 let MIN_FOOD = 100;
 class Anthill extends Actor {
