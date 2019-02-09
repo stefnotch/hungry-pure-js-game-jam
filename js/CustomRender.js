@@ -333,25 +333,6 @@ Render.world = function(render) {
 
   Events.trigger(render, "beforeRender", event);
 
-  //TODO: renderCalls
-  let renderCalls = GGlobals.osWindowsContainer.getRenderCalls();
-  if (renderCalls) {
-    //render.renderCalls.sort((a, b) => a.zIndex - b.zIndex);
-    renderCalls.forEach(renderCall => {
-      context.save();
-      let region = new Path2D();
-      region.rect(
-        renderCall.position.x,
-        renderCall.position.y,
-        renderCall.size.x,
-        renderCall.size.y
-      );
-      context.clip(region);
-      renderCall.render(render);
-
-      context.restore();
-    });
-  }
   // apply background if it has changed
   //if (render.currentBackground !== background)
   //  _applyBackground(render, background);
@@ -361,7 +342,31 @@ Render.world = function(render) {
   context.fillStyle = "transparent";
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.globalCompositeOperation = "source-over";
+  //TODO: renderCalls
+  let renderCalls = GGlobals.osWindowsContainer.getRenderCalls();
+  if (renderCalls) {
+    //render.renderCalls.sort((a, b) => a.zIndex - b.zIndex);
+    renderCalls.forEach(renderCall => {
+      context.save();
+      let region = new Path2D();
+      region.rect(
+        renderCall.position.x,
+        renderCall.position.y, // - 100,
+        renderCall.size.x,
+        renderCall.size.y
+      );
+      context.clip(region);
+      context.clearRect(
+        renderCall.position.x,
+        renderCall.position.y, // - 100,
+        renderCall.size.x,
+        renderCall.size.y
+      );
+      renderCall.render(render);
 
+      context.restore();
+    });
+  }
   // handle bounds
   if (options.hasBounds) {
     // filter out bodies that are not in view

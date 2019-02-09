@@ -8,9 +8,11 @@ class RenderCall {
   render(renderData) {
     var engine = renderData.engine,
       world = engine.world,
-      canvas = renderData.canvas,
-      ctx = renderData.context,
-      options = renderData.options;
+      canvas = renderData.canvas;
+    /** @type {CanvasRenderingContext2D} */
+    let ctx = renderData.context;
+    let options = renderData.options;
+
     /*,
     allBodies = Composite.allBodies(world),
     allConstraints = Composite.allConstraints(world),
@@ -20,8 +22,8 @@ class RenderCall {
     bodies = [],
     constraints = [],
     i;*/
-
-    ctx.fillRect(0, 0, 10, 10);
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(this.position.x, this.position.y, 100, 100);
   }
 }
 
