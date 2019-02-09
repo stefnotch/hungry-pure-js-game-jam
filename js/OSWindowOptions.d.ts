@@ -8,4 +8,5 @@ type OSWindowOptions = {
     y: number;
   };
   folderName: string;
+  //zIndex: number;
 };

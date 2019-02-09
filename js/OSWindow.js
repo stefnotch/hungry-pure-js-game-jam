@@ -1,4 +1,5 @@
 const interact = require("interactjs");
+const OSWindowsContainer = document.getElementById("os-windows-container");
 
 class OSWindow {
   /**
@@ -21,9 +22,9 @@ class OSWindow {
     this.options = options;
 
     // Append elements and stuff
-    document.body.appendChild(this.element);
+    OSWindowsContainer.appendChild(this.element);
 
-    this.element = document.body.lastElementChild;
+    this.element = OSWindowsContainer.lastElementChild;
 
     this.reposition();
     this.resize();
@@ -39,6 +40,7 @@ class OSWindow {
           self.options.position.x += event.dx;
           self.options.position.y += event.dy;
           self.reposition();
+          self.moveToFront();
         }
       })
       .resizable({
@@ -59,7 +61,20 @@ class OSWindow {
         self.options.position.x += event.deltaRect.left;
         self.options.position.y += event.deltaRect.top;
         self.reposition();
+        self.moveToFront();
+      })
+      .pointerEvents({
+        ignoreFrom: ".no-pointer"
+      })
+      .on("down", function(event) {
+        self.moveToFront();
       });
+  }
+
+  moveToFront() {
+    if (this.element.nextElementSibling) {
+      OSWindowsContainer.appendChild(this.element);
+    }
   }
 
   reposition() {
