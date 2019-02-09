@@ -21,13 +21,15 @@ CRender.run(render);
 var x = new OSWindow(document.querySelector(".os-window-template"), {
   position: Matter.Vector.create(0, 0),
   size: Matter.Vector.create(300, 300),
-  filePath: "."
+  filePath: ".",
+  render: render
 });
 
 var y = new OSWindow(document.querySelector(".os-window-template"), {
   position: Matter.Vector.create(0, 0),
   size: Matter.Vector.create(300, 300),
-  filePath: "."
+  filePath: ".",
+  render: render
 });
 
 var cfs = new CachedFS(".");

@@ -7,8 +7,8 @@
  */
 var Render = {};
 
-module.exports = Render;
 const Matter = require("matter-js");
+const RenderCall = require("./RenderCall");
 
 var Common = Matter.Common;
 var Composite = Matter.Composite;
@@ -333,15 +333,26 @@ Render.world = function(render) {
   Events.trigger(render, "beforeRender", event);
 
   //TODO: renderCalls
-  /*
-  var renderCalls = render.renderCalls;
-  renderCalls.forEach(renderCall => {
-    context.save();
-    context.clip();
-    renderCall.render();
 
-    context.restore();
-  });*/
+  if (render.renderCalls) {
+    render.renderCalls.sort((a, b) => a.zIndex - b.zIndex);
+    var renderCalls = render.renderCalls;
+
+    renderCalls.forEach(renderCall => {
+      context.save();
+      let region = new Path2D();
+      region.rect(
+        renderCall.position.x,
+        renderCall.position.y,
+        renderCall.size.x,
+        renderCall.size.y
+      );
+      context.clip(region);
+      renderCall.render(render);
+
+      context.restore();
+    });
+  }
   // apply background if it has changed
   //if (render.currentBackground !== background)
   //  _applyBackground(render, background);
@@ -1606,3 +1617,4 @@ var _applyBackground = function(render, background) {
  * @property textures
  * @type {}
  */
+module.exports = Render;

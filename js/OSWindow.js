@@ -1,5 +1,6 @@
 const interact = require("interactjs");
 const CachedFS = require("./CachedFS");
+const RenderCall = require("./RenderCall");
 const OSWindowsContainer = document.getElementById("os-windows-container");
 
 class OSWindow {
@@ -30,12 +31,17 @@ class OSWindow {
 
     this.element = OSWindowsContainer.lastElementChild;
 
+    this.render = this.options.render;
+    this.renderDiv = this.element.querySelector(".window-content");
+
     this.reposition();
     this.resize();
 
     this.updateInsertText();
 
     this.setupInteraction();
+
+    this.renderCall = new RenderCall();
 
     this.cachedFS = new CachedFS(".");
     this.renderFS();
@@ -116,6 +122,14 @@ class OSWindow {
     this.data.itemCount =
       this.cachedFS.getFiles().length + this.cachedFS.getFolders().length;
     this.updateInsertText();
+
+    let renderRect = this.renderDiv.getBoundingClientRect();
+
+    this.renderCall.position.x = renderRect.x;
+    this.renderCall.position.y = renderRect.y;
+    this.renderCall.size.x = renderRect.width;
+    this.renderCall.size.y = renderRect.height;
+    //this.renderCall.zIndex // TODO:
   }
 }
 

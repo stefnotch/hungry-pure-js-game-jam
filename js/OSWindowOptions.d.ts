@@ -8,7 +8,7 @@ type OSWindowOptions = {
     y: number;
   };
   filePath: string;
-  //zIndex: number;
+  render: any;
 };
 
 type OSWindowData = {
