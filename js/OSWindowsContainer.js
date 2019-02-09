@@ -1,3 +1,4 @@
+const RenderCall = require("./RenderCall");
 const OSWindowsContainerElement = document.getElementById(
   "os-windows-container"
 );
@@ -24,6 +25,13 @@ class OSWindowsContainer {
   remove(osWindow) {
     this.osWindows.splice(this.osWindows.indexOf(osWindow), 1);
     this.containerElement.removeChild(osWindow.element);
+  }
+
+  /**
+   * @returns {RenderCall[]}
+   */
+  getRenderCalls() {
+    return this.osWindows.map(osWindow => osWindow.renderCall);
   }
 }
 

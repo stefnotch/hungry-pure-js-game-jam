@@ -95,11 +95,15 @@ class OSWindow {
   reposition() {
     this.element.style.left = (this.options.position.x || 0) + "px";
     this.element.style.top = (this.options.position.y || 0) + "px";
+
+    this.updateRenderSize();
   }
 
   resize() {
     this.element.style.width = (this.options.size.x || 0) + "px";
     this.element.style.height = (this.options.size.y || 0) + "px";
+
+    this.updateRenderSize();
   }
 
   updateInsertText() {
@@ -121,13 +125,17 @@ class OSWindow {
       this.cachedFS.getFiles().length + this.cachedFS.getFolders().length;
     this.updateInsertText();
 
+    this.updateRenderSize();
+  }
+
+  updateRenderSize() {
     let renderRect = this.renderDiv.getBoundingClientRect();
 
     this.renderCall.position.x = renderRect.x;
     this.renderCall.position.y = renderRect.y;
     this.renderCall.size.x = renderRect.width;
     this.renderCall.size.y = renderRect.height;
-    //this.renderCall.zIndex // TODO:
+    //this.renderCall.zIndex
   }
 }
 

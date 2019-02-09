@@ -9,6 +9,7 @@ var Render = {};
 
 const Matter = require("matter-js");
 const RenderCall = require("./RenderCall");
+const GGlobals = require("./GGlobals");
 
 var Common = Matter.Common;
 var Composite = Matter.Composite;
@@ -333,11 +334,9 @@ Render.world = function(render) {
   Events.trigger(render, "beforeRender", event);
 
   //TODO: renderCalls
-
-  if (render.renderCalls) {
-    render.renderCalls.sort((a, b) => a.zIndex - b.zIndex);
-    var renderCalls = render.renderCalls;
-
+  let renderCalls = GGlobals.osWindowsContainer.getRenderCalls();
+  if (renderCalls) {
+    //render.renderCalls.sort((a, b) => a.zIndex - b.zIndex);
     renderCalls.forEach(renderCall => {
       context.save();
       let region = new Path2D();
