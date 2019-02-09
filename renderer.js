@@ -31,10 +31,3 @@ var y = new OSWindow(document.querySelector(".os-window-template"), {
   filePath: ".",
   render: render
 });
-
-var cfs = new CachedFS(".");
-console.log(cfs.getFolders());
-console.log(cfs.getFiles());
-console.log(cfs.folderName);
-//cfs.goToFolder("name");
-//cfs.goUp();

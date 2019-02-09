@@ -10,6 +10,9 @@ let canvas = document.createElement("canvas"),
 canvas.width = 800;
 canvas.height = 600;
 
+engine.world.gravity.x = 0;
+engine.world.gravity.y = 0;
+
 let render = CRender.create({
   element: canvasOverlayElement,
   engine: engine
@@ -25,6 +28,22 @@ window.addEventListener("resize", () => {
   resizeTimeout = setTimeout(resizeCanvas, 300);
 });
 resizeCanvas();
+
+let mouse = Matter.Mouse.create(document.body);
+let mouseConstraint = Matter.MouseConstraint.create(engine, {
+  mouse: mouse,
+  constraint: {
+    stiffness: 0.2,
+    render: {
+      visible: true
+    }
+  }
+});
+
+World.add(engine.world, mouseConstraint);
+
+// keep the mouse in sync with rendering
+render.mouse = mouse;
 
 module.exports = {
   engine: engine,
