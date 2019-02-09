@@ -20,6 +20,7 @@ class RenderCall {
 
     for (let i = 0; i < this.actors.length; i++) {
       let actor = this.actors[i];
+      actor.update();
     }
     //console.log(this.actors);
     /*,

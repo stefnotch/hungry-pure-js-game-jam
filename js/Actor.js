@@ -17,11 +17,16 @@ class Actor {
     }
 
     this.antArea.addActor(this);
+    this.tickCount = 0;
   }
 
   remove() {
     this.antArea.removeActor(this);
     this.antArea = null;
+  }
+
+  update() {
+    this.tickCount++;
   }
 }
 

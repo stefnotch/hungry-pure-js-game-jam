@@ -5,6 +5,7 @@ const { engine, render, canvas, ctx } = require("./js/MatterSetup");
 const OSWindow = require("./js/OSWindow");
 const CachedFS = require("./js/CachedFS");
 const Actor = require("./js/Actor");
+const Anthill = require("./js/Actors/Anthill");
 
 var boxA = Bodies.rectangle(400, 200, 80, 80);
 var boxB = Bodies.rectangle(450, 50, 80, 80);
@@ -33,4 +34,6 @@ var y = new OSWindow(document.querySelector(".os-window-template"), {
   render: render
 });
 
-y.antArea.removeActor(y.antArea.addActor(new Actor(y.antArea, boxA, true)));
+new Actor(y.antArea, boxA, false);
+
+new Anthill(y.antArea);
