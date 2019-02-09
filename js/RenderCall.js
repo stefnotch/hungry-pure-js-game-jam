@@ -1,6 +1,6 @@
 class RenderCall {
   constructor() {
-    this.zIndex = 0;
+    //this.zIndex = 0;
     this.position = { x: 0, y: 0 };
     this.size = { x: 0, y: 0 };
   }

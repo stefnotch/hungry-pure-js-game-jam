@@ -1,8 +1,8 @@
 const Matter = require("matter-js");
-const { Engine, World, Bodies } = Matter;
+const { World, Bodies } = Matter;
+const { engine } = require("./GGlobals");
 const CRender = require("./CustomRender");
 const canvasOverlayElement = document.getElementById("canvasOverlay");
-let engine = Engine.create();
 
 let canvas = document.createElement("canvas"),
   ctx = canvas.getContext("2d");

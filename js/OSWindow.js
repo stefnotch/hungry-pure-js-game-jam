@@ -2,6 +2,7 @@ const interact = require("interactjs");
 const CachedFS = require("./CachedFS");
 const RenderCall = require("./RenderCall");
 const GGlobals = require("./GGlobals");
+const AntArea = require("./AntArea");
 
 class OSWindow {
   /**
@@ -40,6 +41,7 @@ class OSWindow {
     this.setupInteraction();
 
     this.renderCall = new RenderCall();
+    this.antArea = new AntArea(this.renderCall);
 
     this.cachedFS = new CachedFS(".");
     this.renderFS();
@@ -129,6 +131,8 @@ class OSWindow {
   }
 
   updateRenderSize() {
+    if (!this.renderCall) return;
+
     let renderRect = this.renderDiv.getBoundingClientRect();
 
     this.renderCall.position.x = renderRect.x;
@@ -136,6 +140,8 @@ class OSWindow {
     this.renderCall.size.x = renderRect.width;
     this.renderCall.size.y = renderRect.height;
     //this.renderCall.zIndex
+
+    this.antArea.updateBoundingBox();
   }
 }
 
