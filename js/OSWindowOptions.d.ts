@@ -7,4 +7,5 @@ type OSWindowOptions = {
     x: number;
     y: number;
   };
+  folderName: string;
 };

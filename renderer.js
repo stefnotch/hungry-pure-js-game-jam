@@ -19,5 +19,6 @@ CRender.run(render);
 
 var x = new OSWindow(document.querySelector(".os-window-template"), {
   position: Matter.Vector.create(0, 0),
-  size: Matter.Vector.create(300, 300)
+  size: Matter.Vector.create(300, 300),
+  folderName: "hellstdstdhnenhdtssssssssssssshn"
 });
