@@ -33,4 +33,4 @@ var y = new OSWindow(document.querySelector(".os-window-template"), {
   render: render
 });
 
-y.antArea.addActor(new Actor(y.antArea, boxA, true));
+y.antArea.removeActor(y.antArea.addActor(new Actor(y.antArea, boxA, true)));

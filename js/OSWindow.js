@@ -41,7 +41,9 @@ class OSWindow {
     this.setupInteraction();
 
     this.renderCall = new RenderCall();
+    this.updateRenderSize();
     this.antArea = new AntArea(this.renderCall);
+    this.renderCall.actors = this.antArea.actors;
 
     this.cachedFS = new CachedFS(".");
     this.renderFS();
@@ -141,7 +143,7 @@ class OSWindow {
     this.renderCall.size.y = renderRect.height;
     //this.renderCall.zIndex
 
-    this.antArea.updateBoundingBox();
+    if (this.antArea) this.antArea.updateBoundingBox();
   }
 }
 
