@@ -31,7 +31,7 @@ class OSWindow {
     this.element = GGlobals.osWindowsContainer.add(this);
 
     this.render = this.options.render;
-    this.renderDiv = this.element.querySelector(".window-content");
+    this.renderDiv = this.element; // this.element.querySelector(".window-content");
 
     this.reposition();
     this.resize();
