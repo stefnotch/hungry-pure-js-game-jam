@@ -7,7 +7,7 @@
  */
 var Render = {};
 
-const Matter = require("matter-js");
+const Matter = require("./matter");
 const RenderCall = require("./RenderCall");
 const GGlobals = require("./GGlobals");
 

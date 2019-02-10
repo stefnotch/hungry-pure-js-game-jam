@@ -1,4 +1,4 @@
-const { Vector, Body, Bodies } = require("matter-js");
+const { Vector, Body, Bodies } = require("./../matter");
 const Actor = require("./../Actor");
 const Ant = require("./Ant");
 

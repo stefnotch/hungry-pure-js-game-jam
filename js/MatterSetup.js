@@ -1,4 +1,4 @@
-const Matter = require("matter-js");
+const Matter = require("./matter");
 const { World, Bodies } = Matter;
 const { engine } = require("./GGlobals");
 const CRender = require("./CustomRender");

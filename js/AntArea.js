@@ -1,6 +1,6 @@
-const { Vector } = require("matter-js");
+const { Vector } = require("./matter");
 const { engine } = require("./GGlobals");
-const { World, Body, Bodies } = require("matter-js");
+const { World, Body, Bodies } = require("./matter");
 const Actor = require("./Actor");
 
 let collGroupIndex = 0;
@@ -56,7 +56,7 @@ class AntArea {
       right: [],
       bottom: []
     };
-    let thiccness = 5;
+    let thiccness = 10;
 
     let top = Bodies.rectangle(
       this.position.x + this.size.x / 2,

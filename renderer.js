@@ -1,11 +1,12 @@
-const Matter = require("matter-js");
-const { Engine, World, Bodies, Events } = Matter;
+const Matter = require("./js/matter");
+const { Engine, World, Bodies, Events, Runner } = Matter;
 const CRender = require("./js/CustomRender");
 const { engine, render, canvas, ctx } = require("./js/MatterSetup");
 const OSWindow = require("./js/OSWindow");
 const CachedFS = require("./js/CachedFS");
 const Actor = require("./js/Actor");
 const Anthill = require("./js/Actors/Anthill");
+const { allActors } = require("./js/GGlobals");
 
 var boxA = Bodies.rectangle(400, 200, 80, 80);
 var boxB = Bodies.rectangle(450, 50, 80, 80);
@@ -14,17 +15,50 @@ var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
 // add all of the bodies to the world
 World.add(engine.world, [boxB, ground]);
 
+let runner = Runner.create({
+  delta: 1000 / 60,
+  isFixed: true,
+  enabled: true
+});
+Runner.run(runner, engine);
+
 // run the engine
-Engine.run(engine);
+//Engine.run(engine);
+
+Events.on(runner, "beforeTick", callback => {
+  allActors.forEach(a => {
+    a.update();
+  });
+});
 
 Events.on(engine, "beforeUpdate", ev => {
   ev.source.world.bodies.forEach(b => {
     if (b.label instanceof Actor && b.label.type == "AntArea") {
       b.isStatic = true;
     }
-    b.torque = 0;
   });
 });
+
+function getActualPosition(body) {
+  let pos = Vector.create(0, 0);
+  body.parts.forEach(p => {
+    let partPos = Vector.create(0, 0);
+    p.vertices.forEach(v => {
+      partPos.x += v.x;
+      partPos.y += v.y;
+    });
+
+    partPos.x /= p.vertices.length;
+    partPos.y /= p.vertices.length;
+
+    pos.x += partPos.x;
+    pos.y += partPos.y;
+  });
+  pos.x /= body.parts.length;
+  pos.y /= body.parts.length;
+
+  return pos;
+}
 
 Events.on(engine, "afterUpdate", ev => {
   ev.source.world.bodies.forEach(b => {

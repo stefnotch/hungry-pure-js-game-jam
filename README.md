@@ -14,3 +14,5 @@ All of **my** code: Unlicense
 Material Icons: [Apache license version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 `js/MatterSetup.js`: MIT License
+
+`js/matter.js`: MIT License

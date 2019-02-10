@@ -1,4 +1,5 @@
-const { Vector, Body } = require("matter-js");
+const { Vector, Body } = require("./matter");
+const { allActors } = require("./GGlobals");
 
 class Actor {
   /**
@@ -21,9 +22,12 @@ class Actor {
 
     this.body.label = this;
     this.type = "Actor";
+
+    allActors.add(this);
   }
 
   remove() {
+    allActors.delete(this);
     this.antArea.removeActor(this);
     this.antArea = null;
   }
