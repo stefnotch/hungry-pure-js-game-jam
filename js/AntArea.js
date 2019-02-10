@@ -96,7 +96,7 @@ class AntArea {
             leftSegmentSize
           );
 
-          let corpse = new CorpseActor(this, corpseBody, true);
+          //let corpse = new CorpseActor(this, corpseBody, true);
 
           this.bbPartsDead.left[i] = true;
         }
@@ -125,7 +125,7 @@ class AntArea {
             rightSegmentSize
           );
 
-          let corpse = new CorpseActor(this, corpseBody, true);
+          //let corpse = new CorpseActor(this, corpseBody, true);
 
           this.bbPartsDead.right[i] = true;
         }

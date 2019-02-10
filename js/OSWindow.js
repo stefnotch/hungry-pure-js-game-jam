@@ -135,6 +135,7 @@ class OSWindow {
     this.data.folderName = this.cachedFS.folderName;
     this.data.itemCount =
       this.cachedFS.getFiles().length + this.cachedFS.getFolders().length;
+    this.data.path = this.cachedFS.folderPath;
     this.updateInsertText();
     this.updateRenderSize();
 
@@ -152,7 +153,7 @@ class OSWindow {
         new Food(
           this.antArea,
           { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
-          100, // TODO: Increase this to 2000
+          2000, // TODO: Increase this to 2000
           f => {
             let percentage = Math.min((f.food / f.maxFood) * 100, 100);
             fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;

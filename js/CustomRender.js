@@ -367,6 +367,8 @@ Render.world = function(render) {
       context.restore();
     });
   }
+  // TODO: No debug rendering
+  return;
 
   // handle bounds
   if (options.hasBounds) {

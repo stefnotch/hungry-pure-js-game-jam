@@ -37,3 +37,9 @@ body {
 body {
   display: inline-block;
 }
+
+body {
+  background: url("./../images/eco-green-hill-2334.jpg") no-repeat center center
+    fixed;
+  background-size: cover;
+}

@@ -97,10 +97,12 @@ class Ant extends Actor {
       }
       if (this.health <= 0) {
         this.remove();
+        return;
       }
       this.age++;
       if (this.age > MAX_AGE) {
         this.remove();
+        return;
       }
 
       if (!this.antArea.containsPoint(this.actualPos.x, this.actualPos.y)) {
