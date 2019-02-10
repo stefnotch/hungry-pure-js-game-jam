@@ -47,23 +47,62 @@ body {
 .explanation {
   position: absolute;
   z-index: 1;
-  background-color: lightblue;
-  top: 30px;
-  left: 30px;
-  width: 400px;
-  height: 200px;
-  border-radius: 12px;
+  background-color: black;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   padding: 10px;
   font-family: "Courier New", Courier, monospace;
   font-size: 15px;
+  color: whitesmoke;
+}
+
+.explanation > span {
+  display: inline-block;
+  transition: opacity 500ms;
+  opacity: 0;
 }
 
 .explanation button {
   position: absolute;
   bottom: 10px;
+  /*
   background: #f2f3ed;
   border-top: 2px solid #dedede;
   border-right: 3px solid #8d8d8d;
   border-bottom: 3px solid #8d8d8d;
   border-left: 2px solid #dedede;
+  */
+  background: black;
+  border: 0px;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 30px;
+}
+/*
+.explanation button:hover {
+  color: lightgrey;
+}*/
+.explanation button:active {
+  background: whitesmoke;
+  color: black;
+}
+
+.explanation button::before {
+  content: ".";
+  color: black;
+}
+.explanation button::after {
+  content: ".";
+  color: black;
+}
+.explanation button:hover::before {
+  content: "[";
+  color: white;
+}
+
+.explanation button:hover::after {
+  content: "]";
+  color: white;
 }

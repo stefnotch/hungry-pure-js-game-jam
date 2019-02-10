@@ -100,6 +100,12 @@ foodCallbacks.push((food, newlyAddedFood) => {
   foodDisplay.innerText = food;
 });
 
+document.querySelectorAll(".explanation span").forEach((node, index) => {
+  setTimeout(() => {
+    node.style.opacity = "1";
+  }, index * 900);
+});
+
 let gameStarted = false;
 document.querySelector(".start-button").addEventListener("click", () => {
   document.querySelector(".explanation").style.display = "none";
@@ -115,6 +121,8 @@ document.querySelector(".start-button").addEventListener("click", () => {
   new Anthill(y.antArea);
   gameStarted = true;
 });
+
+document.querySelector(".start-button").click();
 
 document.querySelector(".taskbar-buggo").addEventListener("mouseup", ev => {
   if (!gameStarted) {
