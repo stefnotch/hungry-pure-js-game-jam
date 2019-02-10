@@ -367,6 +367,7 @@ Render.world = function(render) {
       context.restore();
     });
   }
+
   // handle bounds
   if (options.hasBounds) {
     // filter out bodies that are not in view

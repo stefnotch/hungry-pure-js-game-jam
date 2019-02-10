@@ -18,6 +18,9 @@ class Actor {
 
     this.antArea.addActor(this);
     this.tickCount = 0;
+
+    this.body.label = this;
+    this.type = "Actor";
   }
 
   remove() {
@@ -30,6 +33,8 @@ class Actor {
   }
 
   draw(ctx) {}
+
+  collision(other) {}
 }
 
 module.exports = Actor;

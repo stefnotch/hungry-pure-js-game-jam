@@ -19,7 +19,7 @@ Engine.run(engine);
 
 Events.on(engine, "beforeUpdate", ev => {
   ev.source.world.bodies.forEach(b => {
-    if (b.label == "bbBody") {
+    if (b.label instanceof Actor && b.label.type == "AntArea") {
       b.isStatic = true;
     }
     b.torque = 0;
@@ -28,8 +28,20 @@ Events.on(engine, "beforeUpdate", ev => {
 
 Events.on(engine, "afterUpdate", ev => {
   ev.source.world.bodies.forEach(b => {
-    if (b.label == "bbBody") {
+    if (b.label instanceof Actor && b.label.type == "AntArea") {
       b.isStatic = false;
+    }
+  });
+});
+
+Events.on(engine, "collisionStart", ev => {
+  ev.pairs.forEach(pair => {
+    if (pair.bodyA.label instanceof Actor) {
+      pair.bodyA.label.collision(pair.bodyB);
+    }
+
+    if (pair.bodyB.label instanceof Actor) {
+      pair.bodyB.label.collision(pair.bodyA);
     }
   });
 });

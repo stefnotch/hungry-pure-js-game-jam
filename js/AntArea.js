@@ -110,10 +110,12 @@ class AntArea {
         this.bbParts.left,
         this.bbParts.right,
         this.bbParts.bottom
-      ),
-      label: "bbBody"
+      )
     });
+
     this.bbActor = new Actor(this, bbBody, true);
+    this.bbActor.body.parts.forEach(p => (p.label = this.bbActor));
+    this.bbActor.type = "AntArea";
     //this.bbActor.positionDelta = Vector.create(0, 0);
     //this.bbActor.body.pa
 
