@@ -4,7 +4,8 @@
   "description": "My submission for the Pure JS Game Jam",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager ."
   },
   "repository": "",
   "keywords": [
@@ -13,7 +14,8 @@
   "author": "stefnotch",
   "license": "Unlicense",
   "devDependencies": {
-    "electron": "^4.0.3"
+    "electron": "^4.0.3",
+    "electron-packager": "^13.0.1"
   },
   "dependencies": {
     "@types/matter-js": "^0.10.2",
