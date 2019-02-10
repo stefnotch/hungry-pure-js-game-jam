@@ -150,6 +150,10 @@ class OSWindow {
       filesElement.appendChild(fileElement);
 
       fileElement.addEventListener("click", ev => {
+        if (
+          GGlobals.weapons._selectedWeapon != GGlobals.weapons.Changedirectory
+        )
+          return;
         this.cachedFS.goToFolder(entry.name);
         this.antArea.actors
           .filter(actor => actor instanceof Food)
