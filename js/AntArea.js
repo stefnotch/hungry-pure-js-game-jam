@@ -59,6 +59,10 @@ class AntArea {
 
   createBoundingBox() {
     this.removeActor(this.bbActor);
+    this.bbPartsDead.right.forEach(p => this.removeActor(p));
+    this.bbPartsDead.right = [];
+    this.bbPartsDead.left.forEach(p => this.removeActor(p));
+    this.bbPartsDead.left = [];
     // 3 to 5 segments
     let leftCount =
       this.bbParts.left.length || 3 + Math.floor(Math.random() * 3);
@@ -85,22 +89,12 @@ class AntArea {
 
     let leftSegmentSize = (1 / leftCount) * this.size.y;
     for (let i = 0; i < leftCount; i++) {
+      let spawnCorpse = false;
       if (this.bbPartsHealth.left[i] <= 0) {
         if (this.bbPartsDead.left[i] === undefined) {
           // Spawn a wall-corpse
-
-          let corpseBody = Bodies.rectangle(
-            this.position.x + this.size.x - thiccness / 2,
-            this.position.y + i * leftSegmentSize + leftSegmentSize / 2,
-            thiccness,
-            leftSegmentSize
-          );
-
-          //let corpse = new CorpseActor(this, corpseBody, true);
-
-          this.bbPartsDead.left[i] = true;
+          spawnCorpse = true;
         }
-        continue;
       }
       let left = Bodies.rectangle(
         this.position.x + this.size.x - thiccness / 2,
@@ -109,27 +103,21 @@ class AntArea {
         leftSegmentSize
       );
 
-      this.bbParts.left.push(left);
+      if (spawnCorpse) {
+        this.bbPartsDead.left[i] = new CorpseActor(this, left);
+      } else {
+        this.bbParts.left.push(left);
+      }
     }
 
     let rightSegmentSize = (1 / rightCount) * this.size.y;
     for (let i = 0; i < rightCount; i++) {
+      let spawnCorpse = false;
       if (this.bbPartsHealth.right[i] <= 0) {
         if (this.bbPartsDead.right[i] === undefined) {
           // Spawn a wall-corpse
-
-          let corpseBody = Bodies.rectangle(
-            this.position.x + thiccness / 2,
-            this.position.y + i * rightSegmentSize + rightSegmentSize / 2,
-            thiccness,
-            rightSegmentSize
-          );
-
-          //let corpse = new CorpseActor(this, corpseBody, true);
-
-          this.bbPartsDead.right[i] = true;
+          spawnCorpse = true;
         }
-        continue;
       }
       let right = Bodies.rectangle(
         this.position.x + thiccness / 2,
@@ -138,7 +126,8 @@ class AntArea {
         rightSegmentSize
       );
 
-      this.bbParts.right.push(right);
+      if (spawnCorpse) this.bbPartsDead.right[i] = new CorpseActor(this, right);
+      else this.bbParts.right.push(right);
     }
 
     let bottom = Bodies.rectangle(
@@ -161,11 +150,6 @@ class AntArea {
     this.bbActor = new Actor(this, bbBody, true);
     this.bbActor.body.parts.forEach(p => (p.label = this.bbActor));
     this.bbActor.type = "AntArea";
-    //this.bbActor.positionDelta = Vector.create(0, 0);
-    //this.bbActor.body.pa
-
-    // TODO: Health:
-    //bbParts[0].label
   }
 
   updateBoundingBox() {

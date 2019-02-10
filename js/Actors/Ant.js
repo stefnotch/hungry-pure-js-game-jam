@@ -12,6 +12,7 @@ let SPEED = 1;
 let ANGULAR_VELOCITY = 0.05;
 let MAX_FOOD = 100;
 let MAX_AGE = 50;
+let MAX_OFFSCREEN_TICKS = 0;
 
 // Plus/Minus PI
 function normalizeAngle(angle) {
@@ -79,6 +80,8 @@ class Ant extends Actor {
 
     this.actualPos = this.body.position;
     this.age = 0;
+
+    this.offscreenTicks = 1;
   }
 
   update() {
@@ -107,7 +110,16 @@ class Ant extends Actor {
 
       if (!this.antArea.containsPoint(this.actualPos.x, this.actualPos.y)) {
         // TODO: What should the ant do?
-        this.target = Vector.create(0, 0);
+        this.offscreenTicks++;
+        if (this.offscreenTicks >= MAX_OFFSCREEN_TICKS) {
+          let antAreaActors = this.antArea.actors;
+          this.target = antAreaActors.find(
+            a => a.type == "Anthill"
+          ).body.position;
+          Body.translate(this.body, this.target);
+        }
+      } else {
+        this.offscreenTicks = 0;
       }
     }
 
@@ -151,9 +163,10 @@ class Ant extends Actor {
     //this.body.position = pos;
     //let pos = this.body.position;
 
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.target.x, this.target.y, 10, 10);
-
+    if (false) {
+      ctx.fillStyle = "red";
+      ctx.fillRect(this.target.x, this.target.y, 10, 10);
+    }
     ctx.translate(pos.x, pos.y);
     ctx.rotate(this.body.angle);
     //
@@ -214,30 +227,30 @@ class Ant extends Actor {
   collision(other) {
     //console.log(other.label.type);
     if (other.label instanceof Actor && other.label.type == "AntArea") {
-      this.health -= 1;
       let antArea = other.label.antArea;
       if (!antArea) return;
       let antAreaPart = antArea.bbParts.left.indexOf(other);
       if (antAreaPart != -1) {
         let health = antArea.bbPartsHealth.left[antAreaPart];
-        if (health == undefined) health = 300;
+        if (health == undefined) health = 30;
+        // TODO: Refactor wall health
         else health = health - 1;
         antArea.bbPartsHealth.left[antAreaPart] = health;
-
+        this.health -= 1;
         antArea.createBoundingBox();
       } else {
         antAreaPart = antArea.bbParts.right.indexOf(other);
 
         if (antAreaPart != -1) {
           let health = antArea.bbPartsHealth.right[antAreaPart];
-          if (health == undefined) health = 300;
+          if (health == undefined) health = 30;
+          // TODO: Refactor wall health
           else health = health - 1;
           antArea.bbPartsHealth.right[antAreaPart] = health;
-
+          this.health -= 1;
           antArea.createBoundingBox();
         }
       }
-      other.label.health;
     }
   }
 }

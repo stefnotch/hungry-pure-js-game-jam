@@ -1,6 +1,7 @@
 const { Vector, Body, Bodies } = require("./../matter");
 const Actor = require("./../Actor");
 const Ant = require("./Ant");
+const Globals = require("./../GGlobals");
 
 let MAX_TICKS = 50; //TODO: Change to 300
 let ANT_FOOD = 100;
@@ -17,6 +18,7 @@ class Anthill extends Actor {
     this.type = "Anthill";
     this.tickCount = 0;
     this.food = 1500;
+    Globals.addFood(this.food);
     this.body.density = 10000;
     this.body.isSensor = true;
   }
@@ -31,7 +33,7 @@ class Anthill extends Actor {
         new Ant(this.antArea, this.body.position);
         this.food -= ANT_FOOD;
       }
-      this.food -= 1; // Ant hills also naturally consume food
+      this.food -= 2; // Ant hills also naturally consume food
 
       if (this.food <= 0) {
         this.remove();
@@ -45,6 +47,7 @@ class Anthill extends Actor {
       /** @type {Ant} */
       let ant = other.label;
       this.food += ant.food;
+      Globals.addFood(ant.food);
       ant.food = 0;
       ant.state = 0;
     }

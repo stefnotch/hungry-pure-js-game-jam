@@ -83,8 +83,7 @@ class Food extends Actor {
       c.lineTo(part.vertices[0].x, part.vertices[0].y);
     }
 
-    c.lineWidth = 2;
-    c.fillStyle = "rgba(0, 0, 100, 0.4)";
+    c.fillStyle = "rgba(0, 0, 100, 0.1)";
     c.fill();
   }
 }

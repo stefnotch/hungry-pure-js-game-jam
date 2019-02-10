@@ -5,9 +5,7 @@ class CorpseActor extends Actor {
    *
    * @param {*} antArea
    */
-  constructor(antArea, body, isStatic) {
-    let pos = antArea.randomPosition();
-
+  constructor(antArea, body) {
     super(antArea, body, true);
     this.type = "WallCorpse";
     body.isSensor = true;
@@ -48,7 +46,7 @@ class CorpseActor extends Actor {
     }
 
     c.lineWidth = 2;
-    c.fillStyle = "rgba(0, 0, 0, 0.4)";
+    c.fillStyle = "rgba(0, 0, 0, 0.5)";
     c.fill();
   }
 }

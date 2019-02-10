@@ -7,23 +7,32 @@
     <link href="./css/MaterialIcons/material-icons.css" rel="stylesheet" />
     <link href="./css/style.css" rel="stylesheet" />
     <link href="./css/OSWindow.css" rel="stylesheet" />
+    <link href="./css/taskbar.css" rel="stylesheet" />
   </head>
   <body>
     <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js
-    <script>
-      document.write(process.versions.node);
-    </script>
-    , Chromium
-    <script>
-      document.write(process.versions.chrome);
-    </script>
-    , and Electron
-    <script>
-      document.write(process.versions.electron);
-    </script>
-    .
+    <div class="explanation">
+      <span> Prevent the ants from taking over!</span>
+      <br />
+      <span>
+        Use the collected food (bottom right) to open the murder weapons
+      </span>
+      <br />
+      <br />
+      <span>
+        + Buggo: Gives you food, spawns ants
+      </span>
+      <br />
+      <span>
+        + Paw: Squish ants (TODO)
+      </span>
+      <br />
+      <span>
+        + Machinegun: Shoot ants (TODO)
+      </span>
+      <br />
+      <button class="start-button">Start</button>
+    </div>
 
     <template class="os-window-template">
       <div class="os-window">
@@ -56,6 +65,22 @@
     </template>
 
     <div id="os-windows-container"></div>
+    <div id="taskbar">
+      <div class="taskbar-start">
+        <i class="material-icons taskbar-icon">dashboard</i>
+        <span class="fix-material"> Smart</span>
+      </div>
+      <div class="taskbar-explorer taskbar-item open">
+        <i class="material-icons taskbar-icon">folder</i>
+        <span>Explorer</span>
+      </div>
+      <div class="taskbar-buggo taskbar-item">
+        <i class="material-icons taskbar-icon">bug_report</i>
+        <span>Buggo</span>
+      </div>
+
+      <div class="food-display"></div>
+    </div>
     <div id="canvasOverlay"></div>
 
     <script>

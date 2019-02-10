@@ -43,3 +43,27 @@ body {
     fixed;
   background-size: cover;
 }
+
+.explanation {
+  position: absolute;
+  z-index: 1;
+  background-color: lightblue;
+  top: 30px;
+  left: 30px;
+  width: 400px;
+  height: 200px;
+  border-radius: 12px;
+  padding: 10px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+}
+
+.explanation button {
+  position: absolute;
+  bottom: 10px;
+  background: #f2f3ed;
+  border-top: 2px solid #dedede;
+  border-right: 3px solid #8d8d8d;
+  border-bottom: 3px solid #8d8d8d;
+  border-left: 2px solid #dedede;
+}

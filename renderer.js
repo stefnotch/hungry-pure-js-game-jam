@@ -5,7 +5,7 @@ const { engine, render, canvas, ctx } = require("./js/MatterSetup");
 const OSWindow = require("./js/OSWindow");
 const Actor = require("./js/Actor");
 const Anthill = require("./js/Actors/Anthill");
-const { allActors } = require("./js/GGlobals");
+const { allActors, foodCallbacks, addFood } = require("./js/GGlobals");
 
 var boxA = Bodies.rectangle(400, 200, 80, 80);
 var boxB = Bodies.rectangle(450, 50, 80, 80);
@@ -94,12 +94,37 @@ Events.on(engine, "collisionActive", ev => {
 // run the renderer
 CRender.run(render);
 
-var y = new OSWindow({
-  position: Matter.Vector.create(0, 0),
-  size: Matter.Vector.create(300, 300),
-  filePath: "."
+const foodDisplay = document.querySelector("#taskbar .food-display");
+foodDisplay.innerText = 0;
+foodCallbacks.push((food, newlyAddedFood) => {
+  foodDisplay.innerText = food;
 });
 
-new Actor(y.antArea, boxA, false);
+let gameStarted = false;
+document.querySelector(".start-button").addEventListener("click", () => {
+  document.querySelector(".explanation").style.display = "none";
 
-new Anthill(y.antArea);
+  var y = new OSWindow({
+    position: Matter.Vector.create(10, 10),
+    size: Matter.Vector.create(300, 300),
+    filePath: "."
+  });
+
+  new Actor(y.antArea, boxA, false);
+
+  new Anthill(y.antArea);
+  gameStarted = true;
+});
+
+document.querySelector(".taskbar-buggo").addEventListener("mouseup", ev => {
+  if (!gameStarted) {
+    //alert("Nice try");
+  }
+  for (const actor of allActors) {
+    if (actor.type == "Anthill") {
+      actor.food += 300;
+      addFood(500);
+      break;
+    }
+  }
+});

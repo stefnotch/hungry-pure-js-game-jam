@@ -156,7 +156,7 @@ class OSWindow {
           2000, // TODO: Increase this to 2000
           f => {
             let percentage = Math.min((f.food / f.maxFood) * 100, 100);
-            fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
+            fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, #ea6767 0%)`;
           },
           f => {
             entry.eaten = true;
@@ -191,7 +191,7 @@ class OSWindow {
           entry.stats.size,
           f => {
             let percentage = Math.min((f.food / f.maxFood) * 100, 100);
-            fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
+            fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, #ea6767 0%)`;
           },
           f => {
             entry.eaten = true;

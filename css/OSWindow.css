@@ -52,6 +52,11 @@
   cursor: move;
 }
 
+.window-titlebar .left .material-icons {
+  color: orange;
+  margin-left: 5px;
+}
+
 .window-titlebar .right:hover {
   cursor: default;
 }
