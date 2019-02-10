@@ -8,7 +8,7 @@ const States = {
 };
 
 let TARGET_TICKS = 100;
-let SPEED = 0.02;
+let SPEED = 1;
 let ANGULAR_VELOCITY = 0.05;
 let MAX_FOOD = 100;
 
@@ -123,8 +123,8 @@ class Ant extends Actor {
         Math.cos(this.body.angle) * SPEED,
         Math.sin(this.body.angle) * SPEED
       );
-
-      this.body.position = Vector.add(this.body.position, this.direction);
+      Body.translate(this.body, this.direction);
+      // this.body.position = Vector.add(this.body.position, this.direction);
     }
     //let pos = getActualPosition(this.body);
     //this.body.position = pos;
