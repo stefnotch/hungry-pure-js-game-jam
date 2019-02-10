@@ -16,6 +16,11 @@
   overflow: hidden;
 }
 
+.fix-material-other {
+  vertical-align: super;
+  overflow: hidden;
+}
+
 html,
 body {
   -webkit-user-select: none;

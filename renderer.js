@@ -3,7 +3,6 @@ const { Engine, World, Bodies, Events, Runner } = Matter;
 const CRender = require("./js/CustomRender");
 const { engine, render, canvas, ctx } = require("./js/MatterSetup");
 const OSWindow = require("./js/OSWindow");
-const CachedFS = require("./js/CachedFS");
 const Actor = require("./js/Actor");
 const Anthill = require("./js/Actors/Anthill");
 const { allActors } = require("./js/GGlobals");

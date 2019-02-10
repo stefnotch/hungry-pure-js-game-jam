@@ -67,7 +67,7 @@ class OSWindow {
         inertia: true,
         edges: { left: true, right: true, bottom: true, top: false },
         restrictSize: {
-          min: { width: 100, height: 50 }
+          min: { width: 200, height: 200 }
         },
         allowFrom: ".window-resize-handler"
       })
@@ -129,12 +129,48 @@ class OSWindow {
     this.data.itemCount =
       this.cachedFS.getFiles().length + this.cachedFS.getFolders().length;
     this.updateInsertText();
-    this.updateFiles();
     this.updateRenderSize();
-  }
 
-  updateFiles() {
-    new Food(this.antArea, { x: 100, y: 100 }, 100);
+    let filesElement = this.element.querySelector(".window-folders-and-files");
+    this.cachedFS.getFolders().forEach(f => {
+      let fileElement = document.createElement("div");
+      fileElement.className = "folder";
+      fileElement.innerHTML = `<i class="material-icons">folder_open</i><span class="fix-material-other">${
+        f.name
+      }</span>`;
+      filesElement.appendChild(fileElement);
+
+      let rect = fileElement.getBoundingClientRect();
+      new Food(
+        this.antArea,
+        { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
+        100,
+        f => {
+          let percentage = Math.min((f.food / f.maxFood) * 100, 100);
+          fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
+        }
+      );
+    });
+
+    this.cachedFS.getFiles().forEach(f => {
+      let fileElement = document.createElement("div");
+      fileElement.className = "file";
+      fileElement.innerHTML = `<i class="material-icons">book</i><span class="fix-material-other">${
+        f.name
+      }</span>`;
+      filesElement.appendChild(fileElement);
+
+      let rect = fileElement.getBoundingClientRect();
+      new Food(
+        this.antArea,
+        { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
+        f.stats.size,
+        f => {
+          let percentage = Math.min((f.food / f.maxFood) * 100, 100);
+          fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
+        }
+      );
+    });
   }
 
   updateRenderSize() {

@@ -3,23 +3,32 @@ const path = require("path");
 
 let fsCache = new Map();
 
+class Entry {
+  constructor(name, stats) {
+    this.name = name;
+    /** @type {fs.Stats} */
+    this.stats = stats;
+  }
+}
+
 class CachedFolder {
   constructor(folderPath) {
     folderPath = path.resolve(folderPath);
     this.folderPath = folderPath;
 
-    /**@type {string[]} */
+    /**@type {Entry[]} */
     this.files = [];
-    /**@type {string[]} */
-    this.folders = [".."];
+    /**@type {Entry[]} */
+    this.folders = [new Entry("..", new fs.Stats())];
     fs.readdirSync(this.folderPath).forEach(file => {
-      let isFolder = fs
-        .statSync(path.join(this.folderPath, file))
-        .isDirectory();
+      let stats = fs.statSync(path.join(this.folderPath, file));
+
+      let isFolder = stats.isDirectory();
+
       if (isFolder) {
-        this.folders.push(file);
+        this.folders.push(new Entry(file, stats));
       } else {
-        this.files.push(file);
+        this.files.push(new Entry(file, stats));
       }
     });
   }

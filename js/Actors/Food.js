@@ -4,14 +4,20 @@ class Food extends Actor {
   /**
    *
    * @param {*} antArea
+   * @param {Vector} position
+   * @param {number} food
+   * @param {(food: Food) => void} eatingCallback
    */
-  constructor(antArea, position, food) {
-    let body = Bodies.rectangle(position.x, position.y, 20, 20);
+  constructor(antArea, position, food, eatingCallback = undefined) {
+    let body = Bodies.rectangle(position.x, position.y, 10, 10);
     body.isSensor = true;
     super(antArea, body, true);
     this.type = "Food";
 
-    this.food = food;
+    this.maxFood = food || 0;
+    this.food = food || 0;
+
+    this.eatingCallback = eatingCallback;
   }
 
   collisionStay(other) {
@@ -21,6 +27,8 @@ class Food extends Actor {
       ant.state = 2;
       ant.food++;
       this.food--;
+
+      if (this.eatingCallback) this.eatingCallback(this);
     }
   }
 
