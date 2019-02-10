@@ -219,7 +219,7 @@ class AntArea {
 
   randomPosition() {
     return Vector.create(
-      this.position.x + (Math.random() + 0.2) * this.size.x * 0.7,
+      this.position.x + (Math.random() + 0.1) * this.size.x * 0.75,
       this.position.y + (Math.random() + 0.2) * this.size.y * 0.7
     );
   }

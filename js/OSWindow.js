@@ -4,15 +4,19 @@ const RenderCall = require("./RenderCall");
 const GGlobals = require("./GGlobals");
 const AntArea = require("./AntArea");
 const Food = require("./Actors/Food");
+const path = require("path");
+const Matter = require("./matter");
+const Anthill = require("./Actors/Anthill");
+
+const HtmlTemplate = document.querySelector(".os-window-template");
 
 class OSWindow {
   /**
    *
-   * @param {HTMLTemplateElement} templateElement
    * @param {OSWindowOptions} options
    */
-  constructor(templateElement, options) {
-    this.element = document.importNode(templateElement.content, true);
+  constructor(options) {
+    this.element = document.importNode(HtmlTemplate.content, true);
     if (!options) {
       options = {};
     }
@@ -23,6 +27,9 @@ class OSWindow {
     if (!options.size) {
       options.size = { x: 0, y: 0 };
     }
+    if (!options.filePath) {
+      options.filePath = ".";
+    }
     this.options = options;
 
     /** @type {OSWindowData} */
@@ -31,7 +38,7 @@ class OSWindow {
     // Append elements and stuff
     this.element = GGlobals.osWindowsContainer.add(this);
 
-    this.render = this.options.render;
+    //this.render = this.options.render;
     this.renderDiv = this.element; // this.element.querySelector(".window-content");
 
     this.reposition();
@@ -46,7 +53,7 @@ class OSWindow {
     this.antArea = new AntArea(this.renderCall);
     this.renderCall.actors = this.antArea.actors;
 
-    this.cachedFS = new CachedFS(".");
+    this.cachedFS = new CachedFS(options.filePath);
     this.renderFS();
   }
 
@@ -132,11 +139,11 @@ class OSWindow {
     this.updateRenderSize();
 
     let filesElement = this.element.querySelector(".window-folders-and-files");
-    this.cachedFS.getFolders().forEach(f => {
+    this.cachedFS.getFolders().forEach(entry => {
       let fileElement = document.createElement("div");
       fileElement.className = "folder";
       fileElement.innerHTML = `<i class="material-icons">folder_open</i><span class="fix-material-other">${
-        f.name
+        entry.name
       }</span>`;
       filesElement.appendChild(fileElement);
 
@@ -144,10 +151,22 @@ class OSWindow {
       new Food(
         this.antArea,
         { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
-        100,
+        1000, // TODO: Increase this to 2000
         f => {
           let percentage = Math.min((f.food / f.maxFood) * 100, 100);
           fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
+        },
+        f => {
+          let newWindow = new OSWindow({
+            position: Matter.Vector.create(
+              Math.random() * document.body.clientWidth * 0.5,
+              Math.random() * document.body.clientHeight * 0.5
+            ),
+            size: Matter.Vector.create(300, 300),
+            filePath: path.join(this.cachedFS.folderPath, entry.name)
+          });
+
+          new Anthill(newWindow.antArea);
         }
       );
     });

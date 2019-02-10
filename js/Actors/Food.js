@@ -7,8 +7,15 @@ class Food extends Actor {
    * @param {Vector} position
    * @param {number} food
    * @param {(food: Food) => void} eatingCallback
+   * @param {(food: Food) => void} doneCallback
    */
-  constructor(antArea, position, food, eatingCallback = undefined) {
+  constructor(
+    antArea,
+    position,
+    food,
+    eatingCallback = undefined,
+    doneCallback = undefined
+  ) {
     let body = Bodies.rectangle(position.x, position.y, 10, 10);
     body.isSensor = true;
     super(antArea, body, true);
@@ -18,10 +25,18 @@ class Food extends Actor {
     this.food = food || 0;
 
     this.eatingCallback = eatingCallback;
+    this.doneCallback = doneCallback;
+    this.done = false;
   }
 
   collisionStay(other) {
-    if (this.food <= 0) return;
+    if (this.food <= 0) {
+      if (!this.done) {
+        this.done = true;
+        if (this.doneCallback) this.doneCallback(this);
+      }
+      return;
+    }
     if (other.label instanceof Actor && other.label.type == "Ant") {
       let ant = other.label;
       ant.state = 2;

@@ -8,7 +8,6 @@ type OSWindowOptions = {
     y: number;
   };
   filePath: string;
-  render: any;
 };
 
 type OSWindowData = {
