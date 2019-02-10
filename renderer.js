@@ -119,7 +119,7 @@ document.querySelector(".start-button").addEventListener("click", () => {
   var y = new OSWindow({
     position: Matter.Vector.create(10, 10),
     size: Matter.Vector.create(300, 300),
-    filePath: "."
+    filePath: "./../"
   });
 
   new Actor(y.antArea, boxA, false);
