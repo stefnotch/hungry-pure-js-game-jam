@@ -5,7 +5,13 @@ const { engine, render, canvas, ctx } = require("./js/MatterSetup");
 const OSWindow = require("./js/OSWindow");
 const Actor = require("./js/Actor");
 const Anthill = require("./js/Actors/Anthill");
-const { allActors, foodCallbacks, addFood } = require("./js/GGlobals");
+const {
+  allActors,
+  foodCallbacks,
+  addFood,
+  tryRemoveFood,
+  weapons
+} = require("./js/GGlobals");
 
 var boxA = Bodies.rectangle(400, 200, 80, 80);
 var boxB = Bodies.rectangle(450, 50, 80, 80);
@@ -136,3 +142,31 @@ document.querySelector(".taskbar-buggo").addEventListener("mouseup", ev => {
     }
   }
 });
+
+weapons.Downvote.mouseDown = () => {
+  weapons.affectedActors
+    .filter(body => body.label instanceof Actor)
+    .forEach(body => {
+      if (body.label.type == "Ant") {
+        body.label.remove();
+      }
+    });
+  weapons.setWeapon(weapons.Nothing);
+};
+
+const taskbar = document.body.querySelector("#taskbar");
+document.body.addEventListener("mousedown", ev => {
+  if (ev.target == taskbar || taskbar.contains(ev.target)) {
+    return;
+  }
+  if (weapons._selectedWeapon.mouseDown) {
+    weapons._selectedWeapon.mouseDown();
+  }
+});
+document
+  .querySelector(".taskbar-downvote")
+  .addEventListener("mousedown", ev => {
+    if (weapons._selectedWeapon != weapons.Downvote && tryRemoveFood(400)) {
+      weapons.setWeapon(weapons.Downvote);
+    }
+  });

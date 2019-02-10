@@ -18,7 +18,7 @@ class Anthill extends Actor {
     this.type = "Anthill";
     this.tickCount = 0;
     this.food = 1500;
-    Globals.addFood(this.food);
+    Globals.addFood(this.food * 5);
     this.body.density = 10000;
     this.body.isSensor = true;
   }

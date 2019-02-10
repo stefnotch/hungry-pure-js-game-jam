@@ -1,6 +1,6 @@
 const Matter = require("./matter");
-const { World, Bodies } = Matter;
-const { engine } = require("./GGlobals");
+const { World, Bodies, Vector } = Matter;
+const { engine, weapons } = require("./GGlobals");
 const CRender = require("./CustomRender");
 const canvasOverlayElement = document.getElementById("canvasOverlay");
 
@@ -40,6 +40,15 @@ let mouseConstraint = Matter.MouseConstraint.create(engine, {
   }
 });
 
+Matter.Events.on(mouseConstraint, "mousemove", ev => {
+  let pos = ev.mouse.absolute;
+  let oN = 1;
+  let oP = 5;
+  weapons.mouseBounds = {
+    min: { x: pos.x - oN, y: pos.y - oN },
+    max: { x: pos.x + oP, y: pos.y + oP }
+  };
+});
 World.add(engine.world, mouseConstraint);
 
 // keep the mouse in sync with rendering

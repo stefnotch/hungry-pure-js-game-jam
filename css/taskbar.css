@@ -105,6 +105,9 @@
 #taskbar .taskbar-buggo .material-icons {
   color: red;
 }
+#taskbar .taskbar-downvote .material-icons {
+  color: black;
+}
 
 #taskbar .food-display {
   color: white;

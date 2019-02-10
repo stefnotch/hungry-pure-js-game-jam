@@ -333,6 +333,10 @@ Render.world = function(render) {
 
   Events.trigger(render, "beforeRender", event);
 
+  GGlobals.weapons.affectedActors = Matter.Query.region(
+    allBodies,
+    GGlobals.weapons.mouseBounds
+  );
   // apply background if it has changed
   //if (render.currentBackground !== background)
   //  _applyBackground(render, background);

@@ -1,5 +1,6 @@
 const { Vector, Body, Bodies } = require("./../matter");
 const Actor = require("./../Actor");
+const GGlobals = require("./../GGlobals");
 
 const States = {
   searching: 0,
@@ -67,7 +68,7 @@ class Ant extends Actor {
     this.eatingDuration = 0;
 
     this.tickCount = 0;
-    this.health = 3;
+    this._health = 3;
 
     this.state = States.searching;
     this.direction = Vector.create(
@@ -82,6 +83,14 @@ class Ant extends Actor {
     this.age = 0;
 
     this.offscreenTicks = 1;
+  }
+
+  get health() {
+    return this._health;
+  }
+
+  set health(newHealth) {
+    this._health = newHealth;
   }
 
   update() {
@@ -172,7 +181,11 @@ class Ant extends Actor {
     //
 
     ctx.beginPath();
-    ctx.fillStyle = "black";
+    if (GGlobals.weapons.affectedActors.includes(this.body)) {
+      ctx.fillStyle = "darkred";
+    } else {
+      ctx.fillStyle = "black";
+    }
     ctx.ellipse(5, 0, 2, 2, 0, 0, 2 * Math.PI);
     ctx.ellipse(0, 0, 3, 1, 0, 0, 2 * Math.PI);
     ctx.ellipse(-5, 0, 3, 2, 0, 0, 2 * Math.PI);
