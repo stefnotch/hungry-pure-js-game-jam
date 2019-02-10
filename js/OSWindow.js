@@ -148,47 +148,55 @@ class OSWindow {
       filesElement.appendChild(fileElement);
 
       let rect = fileElement.getBoundingClientRect();
-      new Food(
-        this.antArea,
-        { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
-        1000, // TODO: Increase this to 2000
-        f => {
-          let percentage = Math.min((f.food / f.maxFood) * 100, 100);
-          fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
-        },
-        f => {
-          let newWindow = new OSWindow({
-            position: Matter.Vector.create(
-              Math.random() * document.body.clientWidth * 0.5,
-              Math.random() * document.body.clientHeight * 0.5
-            ),
-            size: Matter.Vector.create(300, 300),
-            filePath: path.join(this.cachedFS.folderPath, entry.name)
-          });
+      if (!entry.eaten) {
+        new Food(
+          this.antArea,
+          { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
+          100, // TODO: Increase this to 2000
+          f => {
+            let percentage = Math.min((f.food / f.maxFood) * 100, 100);
+            fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
+          },
+          f => {
+            entry.eaten = true;
+            let newWindow = new OSWindow({
+              position: Matter.Vector.create(
+                Math.random() * document.body.clientWidth * 0.5,
+                Math.random() * document.body.clientHeight * 0.5
+              ),
+              size: Matter.Vector.create(300, 300),
+              filePath: path.join(this.cachedFS.folderPath, entry.name)
+            });
 
-          new Anthill(newWindow.antArea);
-        }
-      );
+            new Anthill(newWindow.antArea);
+          }
+        );
+      }
     });
 
-    this.cachedFS.getFiles().forEach(f => {
+    this.cachedFS.getFiles().forEach(entry => {
       let fileElement = document.createElement("div");
       fileElement.className = "file";
       fileElement.innerHTML = `<i class="material-icons">book</i><span class="fix-material-other">${
-        f.name
+        entry.name
       }</span>`;
       filesElement.appendChild(fileElement);
 
       let rect = fileElement.getBoundingClientRect();
-      new Food(
-        this.antArea,
-        { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
-        f.stats.size,
-        f => {
-          let percentage = Math.min((f.food / f.maxFood) * 100, 100);
-          fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
-        }
-      );
+      if (!entry.eaten) {
+        new Food(
+          this.antArea,
+          { x: rect.x + Math.random() * rect.width * 0.5, y: rect.y },
+          entry.stats.size,
+          f => {
+            let percentage = Math.min((f.food / f.maxFood) * 100, 100);
+            fileElement.style.background = `linear-gradient(90deg, white ${percentage}%, transparent 0%)`;
+          },
+          f => {
+            entry.eaten = true;
+          }
+        );
+      }
     });
   }
 

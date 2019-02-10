@@ -27,6 +27,8 @@ class Food extends Actor {
     this.eatingCallback = eatingCallback;
     this.doneCallback = doneCallback;
     this.done = false;
+
+    if (this.eatingCallback) this.eatingCallback(this);
   }
 
   collisionStay(other) {
