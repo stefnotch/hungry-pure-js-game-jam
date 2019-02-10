@@ -95,7 +95,7 @@ class Anthill extends Actor {
     );
     ctx.fill();
 
-    let foodbarWidth = (this.food / ANT_FOOD) * 10;
+    let foodbarWidth = (this.food / ANT_FOOD) * 5;
     if (this.food >= ANT_FOOD + MIN_FOOD) {
       ctx.fillStyle = "green";
     } else {
