@@ -14,9 +14,11 @@ class Anthill extends Actor {
     let pos = antArea.randomPosition();
 
     super(antArea, Bodies.rectangle(pos.x, pos.y, 20, 20), true);
-
+    this.type = "Anthill";
     this.tickCount = 0;
     this.food = 1500;
+    this.body.density = 10000;
+    this.body.isSensor = true;
   }
 
   update() {
@@ -35,6 +37,16 @@ class Anthill extends Actor {
         this.remove();
         // Ant hill is dead
       }
+    }
+  }
+
+  collision(other) {
+    if (other.label instanceof Ant) {
+      /** @type {Ant} */
+      let ant = other.label;
+      this.food += ant.food;
+      ant.food = 0;
+      ant.state = 0;
     }
   }
 

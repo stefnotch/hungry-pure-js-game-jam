@@ -80,6 +80,18 @@ Events.on(engine, "collisionStart", ev => {
   });
 });
 
+Events.on(engine, "collisionActive", ev => {
+  ev.pairs.forEach(pair => {
+    if (pair.bodyA.label instanceof Actor) {
+      pair.bodyA.label.collisionStay(pair.bodyB);
+    }
+
+    if (pair.bodyB.label instanceof Actor) {
+      pair.bodyB.label.collisionStay(pair.bodyA);
+    }
+  });
+});
+
 // run the renderer
 CRender.run(render);
 

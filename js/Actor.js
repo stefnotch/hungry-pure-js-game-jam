@@ -39,6 +39,8 @@ class Actor {
   draw(ctx) {}
 
   collision(other) {}
+
+  collisionStay(other) {}
 }
 
 module.exports = Actor;

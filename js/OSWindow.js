@@ -3,6 +3,7 @@ const CachedFS = require("./CachedFS");
 const RenderCall = require("./RenderCall");
 const GGlobals = require("./GGlobals");
 const AntArea = require("./AntArea");
+const Food = require("./Actors/Food");
 
 class OSWindow {
   /**
@@ -128,8 +129,12 @@ class OSWindow {
     this.data.itemCount =
       this.cachedFS.getFiles().length + this.cachedFS.getFolders().length;
     this.updateInsertText();
-
+    this.updateFiles();
     this.updateRenderSize();
+  }
+
+  updateFiles() {
+    new Food(this.antArea, { x: 100, y: 100 }, 100);
   }
 
   updateRenderSize() {

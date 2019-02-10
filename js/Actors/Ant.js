@@ -3,14 +3,14 @@ const Actor = require("./../Actor");
 
 const States = {
   searching: 0,
-  searchingExtended: 1,
   eating: 2,
   backHome: 3
 };
 
 let TARGET_TICKS = 100;
 let SPEED = 0.02;
-let ANGULAR_VELOCITY = 0.001;
+let ANGULAR_VELOCITY = 0.05;
+let MAX_FOOD = 100;
 
 // Plus/Minus PI
 function normalizeAngle(angle) {
@@ -55,15 +55,14 @@ class Ant extends Actor {
    * @param {*} antArea
    */
   constructor(antArea, position) {
-    super(
-      antArea,
-      Bodies.rectangle(position.x, position.y + 20, 20, 10),
-      false
-    );
+    super(antArea, Bodies.rectangle(position.x, position.y + 20, 10, 5), false);
     this.type = "Ant";
     this.body.frictionAir = 0.02;
     this.body.restitution = 1;
-    this.body.density = 0.1;
+    this.body.density = 0.01;
+
+    this.food = 0;
+    this.eatingDuration = 0;
 
     this.tickCount = 0;
     this.health = 3;
@@ -83,32 +82,50 @@ class Ant extends Actor {
 
     if (this.tickCount > TARGET_TICKS) {
       this.tickCount = 0;
-      this.target = this.antArea.randomPosition();
-
+      if (this.state == States.backHome) {
+        /** @type {Actor[]} */
+        let antAreaActors = this.antArea.actors;
+        this.target = antAreaActors.find(
+          a => a.type == "Anthill"
+        ).body.position;
+      } else {
+        this.target = this.antArea.randomPosition();
+      }
       if (this.health <= 0) {
         this.remove();
       }
     }
 
-    let dir = Vector.sub(this.target, this.body.position);
-    let dirAngle = Math.atan2(dir.y, dir.x);
-    let bodyAngle = normalizeAngle(this.body.angle);
-    let angularVelocity = dirAngle - bodyAngle;
-    if (angularVelocity > ANGULAR_VELOCITY) {
-      angularVelocity = ANGULAR_VELOCITY;
-    } else if (angularVelocity < -ANGULAR_VELOCITY) {
-      angularVelocity = -ANGULAR_VELOCITY;
+    if (this.state == States.eating) {
+      this.eatingDuration++;
+      if (this.food >= MAX_FOOD || this.eatingDuration >= MAX_FOOD * 3) {
+        this.state = States.backHome;
+        this.eatingDuration = 0;
+      }
     }
-    // Slow angular velocity
-    this.body.angle += angularVelocity;
 
-    this.direction = Vector.create(
-      Math.cos(this.body.angle) * SPEED,
-      Math.sin(this.body.angle) * SPEED
-    );
+    if (this.state == States.searching || this.state == States.backHome) {
+      let dir = Vector.sub(this.target, this.body.position);
+      let dirAngle = Math.atan2(dir.y, dir.x);
+      let bodyAngle = normalizeAngle(this.body.angle);
+      let angularVelocity = dirAngle - bodyAngle;
+      if (angularVelocity > ANGULAR_VELOCITY) {
+        angularVelocity = ANGULAR_VELOCITY;
+      } else if (angularVelocity < -ANGULAR_VELOCITY) {
+        angularVelocity = -ANGULAR_VELOCITY;
+      }
 
-    this.body.position = Vector.add(this.body.position, this.direction);
+      Body.rotate(this.body, angularVelocity);
+      // Slow angular velocity
+      //this.body.angle += angularVelocity;
 
+      this.direction = Vector.create(
+        Math.cos(this.body.angle) * SPEED,
+        Math.sin(this.body.angle) * SPEED
+      );
+
+      this.body.position = Vector.add(this.body.position, this.direction);
+    }
     //let pos = getActualPosition(this.body);
     //this.body.position = pos;
   }
@@ -127,9 +144,9 @@ class Ant extends Actor {
 
     ctx.beginPath();
     ctx.fillStyle = "black";
-    ctx.ellipse(7, 0, 3, 2, 0, 0, 2 * Math.PI);
-    ctx.ellipse(0, 0, 5, 2, 0, 0, 2 * Math.PI);
-    ctx.ellipse(-7, 0, 4, 2.5, 0, 0, 2 * Math.PI);
+    ctx.ellipse(5, 0, 2, 2, 0, 0, 2 * Math.PI);
+    ctx.ellipse(0, 0, 3, 1, 0, 0, 2 * Math.PI);
+    ctx.ellipse(-5, 0, 3, 2, 0, 0, 2 * Math.PI);
     ctx.fill();
     //ctx.strokeStyle = "black";
     //ctx.stroke();
