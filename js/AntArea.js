@@ -2,6 +2,7 @@ const { Vector } = require("./matter");
 const { engine } = require("./GGlobals");
 const { World, Body, Bodies } = require("./matter");
 const Actor = require("./Actor");
+const CorpseActor = require("./Actors/CorpseActor");
 
 let collGroupIndex = 0;
 function getNextIndex() {
@@ -27,7 +28,13 @@ class AntArea {
       right: [],
       bottom: []
     };
-    this.deletedBBParts = {
+    this.bbPartsHealth = {
+      top: [],
+      left: [],
+      right: [],
+      bottom: []
+    };
+    this.bbPartsDead = {
       top: [],
       left: [],
       right: [],
@@ -69,7 +76,21 @@ class AntArea {
 
     let leftSegmentSize = (1 / leftCount) * this.size.y;
     for (let i = 0; i < leftCount; i++) {
-      if (this.deletedBBParts.left[i]) {
+      if (this.bbPartsHealth.left[i] <= 0) {
+        if (this.bbPartsDead.left[i] === undefined) {
+          // Spawn a wall-corpse
+
+          let corpseBody = Bodies.rectangle(
+            this.position.x + this.size.x - thiccness / 2,
+            this.position.y + i * leftSegmentSize + leftSegmentSize / 2,
+            thiccness,
+            leftSegmentSize
+          );
+
+          let corpse = new CorpseActor(this, corpseBody, true);
+
+          this.bbPartsDead.left[i] = true;
+        }
         continue;
       }
       let left = Bodies.rectangle(
@@ -84,7 +105,21 @@ class AntArea {
 
     let rightSegmentSize = (1 / rightCount) * this.size.y;
     for (let i = 0; i < rightCount; i++) {
-      if (this.deletedBBParts.right[i]) {
+      if (this.bbPartsHealth.right[i] <= 0) {
+        if (this.bbPartsDead.right[i] === undefined) {
+          // Spawn a wall-corpse
+
+          let corpseBody = Bodies.rectangle(
+            this.position.x + thiccness / 2,
+            this.position.y + i * rightSegmentSize + rightSegmentSize / 2,
+            thiccness,
+            rightSegmentSize
+          );
+
+          let corpse = new CorpseActor(this, corpseBody, true);
+
+          this.bbPartsDead.right[i] = true;
+        }
         continue;
       }
       let right = Bodies.rectangle(
@@ -110,7 +145,8 @@ class AntArea {
         this.bbParts.left,
         this.bbParts.right,
         this.bbParts.bottom
-      )
+      ),
+      restitution: 1
     });
 
     this.bbActor = new Actor(this, bbBody, true);

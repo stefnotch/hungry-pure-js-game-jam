@@ -62,6 +62,8 @@ class Ant extends Actor {
     );
     this.type = "Ant";
     this.body.frictionAir = 0.02;
+    this.body.restitution = 1;
+    this.body.density = 0.1;
 
     this.tickCount = 0;
     this.health = 3;
@@ -179,7 +181,30 @@ class Ant extends Actor {
   collision(other) {
     //console.log(other.label.type);
     if (other.label instanceof Actor && other.label.type == "AntArea") {
-      //this.health -= 3;
+      this.health -= 1;
+      let antArea = other.label.antArea;
+      if (!antArea) return;
+      let antAreaPart = antArea.bbParts.left.indexOf(other);
+      if (antAreaPart != -1) {
+        let health = antArea.bbPartsHealth.left[antAreaPart];
+        if (health == undefined) health = 99;
+        else health = health - 1;
+        antArea.bbPartsHealth.left[antAreaPart] = health;
+
+        antArea.createBoundingBox();
+      } else {
+        antAreaPart = antArea.bbParts.right.indexOf(other);
+
+        if (antAreaPart != -1) {
+          let health = antArea.bbPartsHealth.right[antAreaPart];
+          if (health == undefined) health = 99;
+          else health = health - 1;
+          antArea.bbPartsHealth.right[antAreaPart] = health;
+
+          antArea.createBoundingBox();
+        }
+      }
+      other.label.health;
     }
   }
 }
