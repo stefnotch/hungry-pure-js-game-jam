@@ -23,24 +23,30 @@ function addFood(food) {
 let weapons = {
   Nothing: {},
   Downvote: {
-    mouseIcon: "./css/MaterialIcons/baseline_thumb_down_black_18dp.png",
+    mouseIcon: `url("./css/MaterialIcons/baseline_thumb_down_black_18dp.png"), auto `,
+    mouseDown: () => {}
+  },
+  Changedirectory: {
+    mouseIcon: "pointer",
     mouseDown: () => {}
   },
   setWeapon: weapon => {
     if (weapon.mouseIcon) {
-      document.body.style.cursor = `url("${weapon.mouseIcon}"), auto`;
+      document.body.style.cursor = weapon.mouseIcon;
     } else {
       document.body.style.removeProperty("cursor");
     }
     weapons._selectedWeapon = weapon;
   },
-  _selectedWeapon: {},
+  _selectedWeapon: undefined,
   affectedActors: [],
   mouseBounds: {
     min: { x: 0, y: 0 },
     max: { x: 0, y: 0 }
   }
 };
+
+weapons._selectedWeapon = weapons.Nothing;
 
 module.exports = {
   osWindowsContainer: osWindowsContainer,

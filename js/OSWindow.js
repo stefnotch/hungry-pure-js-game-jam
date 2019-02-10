@@ -140,6 +140,7 @@ class OSWindow {
     this.updateRenderSize();
 
     let filesElement = this.element.querySelector(".window-folders-and-files");
+    filesElement.innerHTML = "";
     this.cachedFS.getFolders().forEach(entry => {
       let fileElement = document.createElement("div");
       fileElement.className = "folder";
@@ -147,6 +148,14 @@ class OSWindow {
         entry.name
       }</span>`;
       filesElement.appendChild(fileElement);
+
+      fileElement.addEventListener("click", ev => {
+        this.cachedFS.goToFolder(entry.name);
+        this.antArea.actors
+          .filter(actor => actor instanceof Food)
+          .forEach(a => a.remove());
+        this.renderFS();
+      });
 
       let rect = fileElement.getBoundingClientRect();
       if (!entry.eaten) {

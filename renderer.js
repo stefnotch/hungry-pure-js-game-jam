@@ -125,10 +125,11 @@ document.querySelector(".start-button").addEventListener("click", () => {
   new Actor(y.antArea, boxA, false);
 
   new Anthill(y.antArea);
+  tryRemoveFood(2500);
   gameStarted = true;
 });
-
-document.querySelector(".start-button").click();
+// TODO: Remove this:
+//document.querySelector(".start-button").click();
 
 document.querySelector(".taskbar-buggo").addEventListener("mouseup", ev => {
   if (!gameStarted) {
@@ -154,6 +155,10 @@ weapons.Downvote.mouseDown = () => {
   weapons.setWeapon(weapons.Nothing);
 };
 
+weapons.Changedirectory.mouseDown = () => {
+  weapons.setWeapon(weapons.Nothing);
+};
+
 const taskbar = document.body.querySelector("#taskbar");
 document.body.addEventListener("mousedown", ev => {
   if (ev.target == taskbar || taskbar.contains(ev.target)) {
@@ -163,10 +168,19 @@ document.body.addEventListener("mousedown", ev => {
     weapons._selectedWeapon.mouseDown();
   }
 });
+
 document
   .querySelector(".taskbar-downvote")
   .addEventListener("mousedown", ev => {
-    if (weapons._selectedWeapon != weapons.Downvote && tryRemoveFood(400)) {
+    if (weapons._selectedWeapon == weapons.Nothing && tryRemoveFood(400)) {
       weapons.setWeapon(weapons.Downvote);
+    }
+  });
+
+document
+  .querySelector(".taskbar-changedir")
+  .addEventListener("mousedown", ev => {
+    if (weapons._selectedWeapon == weapons.Nothing && tryRemoveFood(1400)) {
+      weapons.setWeapon(weapons.Changedirectory);
     }
   });

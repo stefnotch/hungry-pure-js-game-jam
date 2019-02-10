@@ -346,7 +346,7 @@ Render.world = function(render) {
   context.fillStyle = "transparent";
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.globalCompositeOperation = "source-over";
-  //TODO: renderCalls
+
   let renderCalls = GGlobals.osWindowsContainer.getRenderCalls();
   if (renderCalls) {
     //render.renderCalls.sort((a, b) => a.zIndex - b.zIndex);

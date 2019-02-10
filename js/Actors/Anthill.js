@@ -3,7 +3,7 @@ const Actor = require("./../Actor");
 const Ant = require("./Ant");
 const Globals = require("./../GGlobals");
 
-let MAX_TICKS = 50; //TODO: Change to 300
+let MAX_TICKS = 100; //TODO: Change to 300
 let ANT_FOOD = 100;
 let MIN_FOOD = 100;
 class Anthill extends Actor {
@@ -18,7 +18,7 @@ class Anthill extends Actor {
     this.type = "Anthill";
     this.tickCount = 0;
     this.food = 1500;
-    Globals.addFood(this.food * 5);
+    Globals.addFood(this.food * 2);
     this.body.density = 10000;
     this.body.isSensor = true;
   }
