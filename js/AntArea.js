@@ -48,6 +48,15 @@ class AntArea {
     this.createBoundingBox();
   }
 
+  containsPoint(pointX, pointY) {
+    return (
+      this.position.x <= pointX &&
+      pointX <= this.position.x + this.size.x &&
+      this.position.y <= pointY &&
+      pointY <= this.position.y + this.size.y
+    );
+  }
+
   createBoundingBox() {
     this.removeActor(this.bbActor);
     // 3 to 5 segments

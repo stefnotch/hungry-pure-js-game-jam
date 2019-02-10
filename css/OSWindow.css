@@ -72,9 +72,9 @@
 .window-content {
   overflow: auto;
 }
-
+/*
 .window-folders-and-files {
-}
+}*/
 
 .window-folders-and-files .material-icons {
   line-height: 14px;

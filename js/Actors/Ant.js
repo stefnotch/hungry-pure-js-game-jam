@@ -11,6 +11,7 @@ let TARGET_TICKS = 100;
 let SPEED = 1;
 let ANGULAR_VELOCITY = 0.05;
 let MAX_FOOD = 100;
+let MAX_AGE = 50;
 
 // Plus/Minus PI
 function normalizeAngle(angle) {
@@ -75,6 +76,9 @@ class Ant extends Actor {
 
     /** @type {Vector} */
     this.target = antArea.randomPosition();
+
+    this.actualPos = this.body.position;
+    this.age = 0;
   }
 
   update() {
@@ -93,6 +97,15 @@ class Ant extends Actor {
       }
       if (this.health <= 0) {
         this.remove();
+      }
+      this.age++;
+      if (this.age > MAX_AGE) {
+        this.remove();
+      }
+
+      if (!this.antArea.containsPoint(this.actualPos.x, this.actualPos.y)) {
+        // TODO: What should the ant do?
+        this.target = Vector.create(0, 0);
       }
     }
 
@@ -132,6 +145,7 @@ class Ant extends Actor {
 
   draw(ctx) {
     let pos = getActualPosition(this.body);
+    this.actualPos = pos;
     //this.body.position = pos;
     //let pos = this.body.position;
 
@@ -204,7 +218,7 @@ class Ant extends Actor {
       let antAreaPart = antArea.bbParts.left.indexOf(other);
       if (antAreaPart != -1) {
         let health = antArea.bbPartsHealth.left[antAreaPart];
-        if (health == undefined) health = 99;
+        if (health == undefined) health = 300;
         else health = health - 1;
         antArea.bbPartsHealth.left[antAreaPart] = health;
 
@@ -214,7 +228,7 @@ class Ant extends Actor {
 
         if (antAreaPart != -1) {
           let health = antArea.bbPartsHealth.right[antAreaPart];
-          if (health == undefined) health = 99;
+          if (health == undefined) health = 300;
           else health = health - 1;
           antArea.bbPartsHealth.right[antAreaPart] = health;
 
